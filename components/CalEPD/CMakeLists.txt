@@ -47,6 +47,7 @@ set(srcs
     "models/color/gdeh042Z21.cpp"
     "models/color/gdeq042Z21.cpp"
     #"models/color/wave12i48BR.cpp"
+    "models/color/wave7i5BR.cpp"
 
     "models/color/dke/dke075z83.cpp"
     # 7 colors ACEP
@@ -93,6 +94,7 @@ idf_component_register(SRCS ${srcs}
                              driver
                     # Uncomment for parallel epapers:
                     # REQUIRES "epdiy"
+                    REQUIRES "SubBitPackedArray"
 
                     INCLUDE_DIRS "include"
 )

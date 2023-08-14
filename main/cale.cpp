@@ -28,15 +28,17 @@
 //#include <gdew042t2.h>
 //#include <gdew027w3.h>
 //#include <gdeh0213b73.h>
-#include "color/dke/dke075z83.h" // DEPGO0750RW
+//#include "color/dke/dke075z83.h" // DEPGO0750RW
 //#include <color/gdew0583z83.h>
+#include <wave7i5BR.h>
 
 EpdSpi io;
 //Depg1020bn display(io);
 //Gdew075T7 display(io);
-Dke075Z83 display(io);
+// Dke075Z83 display(io);
 //Gdew0583z83 display(io);
 // Plastic Logic test: Check cale-grayscale.cpp
+Wave7I5RB display(io);
 
 // Enable on HIGH for Laska ESPink
 
@@ -557,20 +559,41 @@ void app_main(void)
     }
     ESP_ERROR_CHECK(ret);
     // WiFi log level
-    esp_log_level_set("wifi", ESP_LOG_ERROR);
+    // esp_log_level_set("wifi", ESP_LOG_ERROR);
 
-    ESP_LOGI(TAG, "ESP_WIFI_MODE_STA");
-    wifi_init_sta();
+    // ESP_LOGI(TAG, "ESP_WIFI_MODE_STA");
+    // wifi_init_sta();
     
     gpio_set_direction(GPIO_DISPLAY_POWER_ON, GPIO_MODE_OUTPUT);
     gpio_set_level(GPIO_DISPLAY_POWER_ON, 1);
     //  On  init(true) activates debug (And makes SPI communication slower too)
     display.init();
     display.setRotation(CONFIG_DISPLAY_ROTATION);
+
+    for (int x = 200; x < 400; ++x)
+    {
+      for (int y = 200; y < 400; ++y)
+      {
+        display.drawPixel(x, y, EPD_RED);
+      }
+    }
+
+    for (int x = 450; x < 650; ++x)
+    {
+      for (int y = 200; y < 400; ++y)
+      {
+        display.drawPixel(x, y, EPD_BLACK);
+      }
+    }
+
+    display.drawCircle(100, 100, 100, EPD_RED);
+    display.drawCircle(300, 100, 100, EPD_BLACK);
+
     display.update();
-    
+
+
     // Show available Dynamic Random Access Memory available after display.init() - Both report same number
     printf("Free heap: %d (After epaper instantiation)\n", (int) xPortGetFreeHeapSize());
 
-    http_post();
+    //http_post();
 }
